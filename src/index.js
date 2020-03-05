@@ -25,7 +25,7 @@ str = str.match(reg);
 
 function polishNotation(str) {
     for (let i=0;i<str.length;i++) {
-        if (!!Number(str[i])) {
+        if (!isNaN(parseFloat(str[i])) && isFinite(parseFloat(str[i]))) {
             output.push(str[i]);
         }
     
@@ -60,14 +60,17 @@ function polishNotation(str) {
 
 polishNotation(str);
 
+console.log(str)
+
 str = output;
 output =[];
 
 for (let i=0;i<str.length;i++) {
-    if (!!Number(str[i])) {
+    if (!isNaN(parseFloat(str[i])) && isFinite(parseFloat(str[i]))) {
         output.push(str[i])
     } else {
         let [y,x] = [Number(output.pop()), Number(output.pop())];
+        if (operation[str[i]](x,y) == Infinity) {throw Error ('TypeError: Division by zero.')}
         output.push(operation[str[i]](x,y)) 
     }
 }
